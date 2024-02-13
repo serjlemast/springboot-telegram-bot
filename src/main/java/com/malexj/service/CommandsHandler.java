@@ -35,7 +35,6 @@ public class CommandsHandler extends TelegramLongPollingBot {
 
   /** States */
   private static final String START_STATE = "/start";
-
   private static final String DONT_NEED_CAT_STATE = "dont-need-cat";
   private static final String BUY_CAT_STATE = "buy-cat";
   private static final String CAT_NEWS_STATE = "cat-news";
@@ -48,11 +47,10 @@ public class CommandsHandler extends TelegramLongPollingBot {
   @Override
   public void onUpdateReceived(Update update) {
     String txId = "id:" + UUID.randomUUID() + ":date:" + LocalDateTime.now();
-
     if (update.hasMessage()) {
       Optional.ofNullable(update.getMessage())
           .filter(Message::hasText)
-          .filter(message -> START_STATE.equalsIgnoreCase(message.getText()))
+          .filter(message -> START_STATE.equals(message.getText()))
           .map(message -> userInfo(txId, message))
           .ifPresent(
               message -> {

@@ -8,3 +8,16 @@
 TELEGRAM.BOT.USERNAME=bot+usernamr
 TELEGRAM.BOT.TOKEN=app_token
 ```
+
+### Gradle Versions Plugin
+
+Displays a report of the project dependencies that are up-to-date, exceed the latest version found, have upgrades, or
+failed to be resolved
+
+info: https://github.com/ben-manes/gradle-versions-plugin
+
+command:
+
+```
+gradle dependencyUpdates
+```

@@ -1,5 +1,6 @@
 package com.malexj.service;
 
+import com.malexj.model.TPrivateChat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -21,11 +22,14 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 @Service
 public class CommandsHandler extends TelegramLongPollingBot {
 
+  private final UserService userService;
+
   @Value("${telegram.bot.username}")
   private String username;
 
-  public CommandsHandler(@Value("${telegram.bot.token}") String token) {
+  public CommandsHandler(@Value("${telegram.bot.token}") String token, UserService userService) {
     super(token);
+    this.userService = userService;
   }
 
   @Override
@@ -41,50 +45,46 @@ public class CommandsHandler extends TelegramLongPollingBot {
   private static final String CAT_NEWS_STATE = "cat-news";
 
   /** Logger */
-  private static final String TEXT_FORMAT = "tx - {}, User - {}";
-
   private static final String TEXT_MESSAGE_FORMAT = "tx - {}, message date - {}";
 
   @Override
   public void onUpdateReceived(Update update) {
     String txId = "id:" + UUID.randomUUID() + ":date:" + LocalDateTime.now();
     if (update.hasMessage()) {
+      Message message = update.getMessage();
+
+      // start private chat with bot
       Optional.ofNullable(update.getMessage())
           .filter(Message::hasText)
-          .filter(message -> START_STATE.equals(message.getText()))
-          .map(message -> userInfo(txId, message))
+          .filter(msg -> START_STATE.equals(msg.getText()))
           .ifPresent(
-              message -> {
-                Message respMsg = initState(message);
-                log.info(TEXT_MESSAGE_FORMAT, txId, respMsg.getDate());
+              msg -> {
+                var privateChat = new TPrivateChat(message);
+                userService.savePrivateChatAndUser(privateChat);
+                Message resp = initState(message);
+                log.info(TEXT_MESSAGE_FORMAT, txId, resp.getDate());
+              });
+      return;
+    }
+    if (update.hasCallbackQuery()) {
+      Optional.ofNullable(update.getCallbackQuery())
+          //          .map(callbackQuery -> userInfo(txId, callbackQuery))
+          .map(CallbackQuery::getData)
+          .ifPresent(
+              data -> {
+                Message message =
+                    switch (data) {
+                      case DONT_NEED_CAT_STATE -> dontNeedCat(update);
+                      case BUY_CAT_STATE -> buyCat(update);
+                      case CAT_NEWS_STATE -> catNews(update);
+                      default -> throw new IllegalStateException("Unexpected value: " + data);
+                    };
+                log.info(TEXT_MESSAGE_FORMAT, txId, message.getDate());
               });
       return;
     }
 
-    Optional.ofNullable(update.getCallbackQuery())
-        .map(callbackQuery -> userInfo(txId, callbackQuery))
-        .map(CallbackQuery::getData)
-        .ifPresent(
-            data -> {
-              Message message =
-                  switch (data) {
-                    case DONT_NEED_CAT_STATE -> dontNeedCat(update);
-                    case BUY_CAT_STATE -> buyCat(update);
-                    case CAT_NEWS_STATE -> catNews(update);
-                    default -> throw new IllegalStateException("Unexpected value: " + data);
-                  };
-              log.info(TEXT_MESSAGE_FORMAT, txId, message.getDate());
-            });
-  }
-
-  private CallbackQuery userInfo(String txId, CallbackQuery callbackQuery) {
-    log.info(TEXT_FORMAT, txId, callbackQuery.getFrom());
-    return callbackQuery;
-  }
-
-  private Message userInfo(String txId, Message message) {
-    log.info(TEXT_FORMAT, txId, message.getFrom());
-    return message;
+    log.warn("unknown command or query - {}", update);
   }
 
   @SneakyThrows

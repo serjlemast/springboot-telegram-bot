@@ -24,6 +24,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.telegram:telegrambots-spring-boot-starter:${telegrambotsVersion}"
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

@@ -77,3 +77,8 @@ command:
 ```
 gradle dependencyUpdates
 ```
+
+### Java code style
+
+google-java-format <br>
+link: https://github.com/google/google-java-format/blob/master/README.md#intellij-jre-config

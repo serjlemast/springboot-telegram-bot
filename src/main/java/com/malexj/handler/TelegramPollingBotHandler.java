@@ -31,43 +31,48 @@ public class TelegramPollingBotHandler extends InitStatePollingHandler {
   @Override
   public void onUpdateReceived(Update update) {
     if (update.hasMessage()) {
-      Message message = update.getMessage();
-      /*
-       * Handle start private conversation with bot
-       */
-      Optional.ofNullable(message)
-          .filter(Message::isCommand)
-          .filter(msg -> START_STATE.equals(msg.getText()))
-          .map(this::initState)
-          .ifPresent(msg -> storageService.saveChat(new ChatDto(msg.getChat(), msg.getFrom())));
+      var message = update.getMessage();
+      var user = message.getFrom();
+      var chat = message.getChat();
+      var text = message.getText();
 
       /*
-       * Handle private message to bot
+       * Handle private conversation with bot
        */
-      Optional.ofNullable(message)
-          .filter(Message::isUserMessage)
-          .ifPresent(
-              msg -> {
-                var user = msg.getFrom();
-                log.info(
-                    "Private message - '{}' from user: '{}'", msg.getText(), user.getFirstName());
-              });
+      if (message.isUserMessage()) {
+
+        /*
+         * Handle init private conversation
+         */
+        Optional.of(message)
+            .filter(Message::isCommand)
+            .filter(msg -> START_STATE.equals(msg.getText()))
+            .map(this::initState)
+            .ifPresent(msg -> storageService.saveChat(new ChatDto(message)));
+
+        /*
+         * Handle private message to bot
+         */
+        Optional.of(message)
+            .filter(msg -> !msg.isCommand())
+            .ifPresent(
+                msg ->
+                    log.info("Private message - '{}' from user: '{}'", text, user.getFirstName()));
+      }
+
       /*
        * Handle group message
        */
-      Optional.ofNullable(message)
+      Optional.of(message)
           .filter(Message::isSuperGroupMessage)
           .ifPresent(
-              msg -> {
-                var chat = msg.getChat();
-                var user = msg.getFrom();
-                log.info(
-                    "Super group message: '{}', to '{}' '{}' chat, from user: '{}'",
-                    msg.getText(),
-                    chat.getType(),
-                    chat.getTitle(),
-                    user.getFirstName());
-              });
+              msg ->
+                  log.info(
+                      "Super group message: '{}', to '{}' '{}' chat, from user: '{}'",
+                      text,
+                      chat.getType(),
+                      chat.getTitle(),
+                      user.getFirstName()));
       return;
     }
 

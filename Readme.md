@@ -7,6 +7,8 @@
 ```
 TELEGRAM.BOT.USERNAME=bot+username
 TELEGRAM.BOT.TOKEN=app_token
+MONGODB_DATABASE=db_name
+MONGODB_URI=uri_to_mongo_db
 ```
 
 ### Telegram API

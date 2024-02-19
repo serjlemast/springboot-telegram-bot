@@ -1,6 +1,12 @@
 spring:
   config:
     import: optional:file:.env[.properties]
+  application:
+    name: telegram-app
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:uri}
+      database: ${MONGODB_DATABASE:app-telegram-db}
 
 telegram:
   bot:

@@ -1,43 +1,42 @@
 package com.malexj.service;
 
+import com.malexj.mapper.ObjectMapper;
 import com.malexj.model.ChatDto;
 import com.malexj.model.ChatType;
 import com.malexj.model.UserDto;
+import com.malexj.repository.ChatRepository;
+import com.malexj.repository.UserRepository;
 import java.util.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class StorageService {
 
-  private static final Set<UserDto> users = new HashSet<>();
-  private static final Set<ChatDto> chats = new HashSet<>();
+  private final ObjectMapper mapper;
+  private final UserRepository userRepository;
+  private final ChatRepository chatRepository;
 
-  public void saveChat(ChatDto chat) {
-    ChatType chatType = chat.getType();
-    if (chat.getType() == ChatType.PRIVATE) {
-      users.add(chat.getUser());
+  public void saveChat(ChatDto chatDto) {
+    if (chatDto.getType() == ChatType.PRIVATE) {
+      UserDto userDto = chatDto.getUser();
+      if (!userRepository.existsByUserId(userDto.userId())) {
+        userRepository.save(mapper.dtoToEntity(userDto));
+      }
     }
-    chats.add(chat);
-    log.info(
-        "Init new '{}' chat with 'id' - {} and title - '{}'",
-        chatType,
-        chat.getId(),
-        chat.getTitle());
+    if (!chatRepository.existsByChatId(chatDto.getChatId())) {
+      chatRepository.save(mapper.dtoToEntity(chatDto));
+    }
   }
 
   public List<UserDto> findAllUsers() {
-    return new ArrayList<>(users);
+    return userRepository.findAll().stream().map(mapper::entityToDto).toList();
   }
 
   public List<ChatDto> findAllChats() {
-    return new ArrayList<>(chats);
-  }
-
-  public List<ChatDto> findAllChatsByType(ChatType type) {
-    return chats.stream() //
-        .filter(chat -> chat.getType() == type) //
-        .toList();
+    return chatRepository.findAll().stream().map(mapper::entityToDto).toList();
   }
 }

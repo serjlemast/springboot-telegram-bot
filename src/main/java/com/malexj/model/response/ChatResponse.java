@@ -1,6 +1,6 @@
 package com.malexj.model.response;
 
-import com.malexj.model.TChat;
+import com.malexj.model.ChatDto;
 import java.util.List;
 
-public record ChatResponse(List<TChat> privateChats) {}
+public record ChatResponse(List<ChatDto> privateChats) {}

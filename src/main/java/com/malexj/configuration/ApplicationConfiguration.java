@@ -15,13 +15,13 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @RequiredArgsConstructor
 public class ApplicationConfiguration {
 
-    private final LongPollingBot bot;
+  private final LongPollingBot bot;
 
-    @SneakyThrows
-    @EventListener({ContextRefreshedEvent.class})
-    public void init() {
-        var botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        var botSession = botsApi.registerBot(bot);
-        log.info("Starting TelegramBotsApi - {}", botSession.isRunning());
-    }
+  @SneakyThrows
+  @EventListener({ContextRefreshedEvent.class})
+  public void init() {
+    var botsApi = new TelegramBotsApi(DefaultBotSession.class);
+    var botSession = botsApi.registerBot(bot);
+    log.info("Starting TelegramBotsApi - {}", botSession.isRunning());
+  }
 }

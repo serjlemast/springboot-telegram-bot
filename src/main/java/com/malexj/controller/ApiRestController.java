@@ -4,34 +4,30 @@ import com.malexj.model.request.MessageRequest;
 import com.malexj.model.response.ChatResponse;
 import com.malexj.model.response.MessageResponse;
 import com.malexj.model.response.UserResponse;
-import com.malexj.service.StorageService;
-import com.malexj.service.TelegramPollingService;
+import com.malexj.service.TelegramApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
-public class ApiController {
+public class ApiRestController {
 
-  private final StorageService storageService;
-  private final TelegramPollingService pollingService;
+  private final TelegramApiService apiService;
 
   @GetMapping("/users")
   public ResponseEntity<UserResponse> findUsers() {
-    return ResponseEntity.ok(new UserResponse(storageService.findAllUsers()));
+    return ResponseEntity.ok(apiService.findAllUsers());
   }
 
   @GetMapping("/chats")
   public ResponseEntity<ChatResponse> findAllPrivateChats() {
-    return ResponseEntity.ok(new ChatResponse(storageService.findAllChats()));
+    return ResponseEntity.ok(apiService.findAllChats());
   }
 
   @PostMapping("/messages")
   public ResponseEntity<MessageResponse> sendMessage(@RequestBody MessageRequest request) {
-    Message message = pollingService.sendMessage(request.catId(), request.message());
-    return ResponseEntity.ok(new MessageResponse(message));
+    return ResponseEntity.ok(apiService.sendMessage(request));
   }
 }

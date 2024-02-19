@@ -1,4 +1,4 @@
-package com.malexj.service;
+package com.malexj.handler;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 @Slf4j
-public abstract class InitStatePollingService extends TelegramLongPollingBot {
+public abstract class InitStatePollingHandler extends TelegramLongPollingBot {
 
   /** States */
   protected static final String START_STATE = "/start";
@@ -25,7 +25,7 @@ public abstract class InitStatePollingService extends TelegramLongPollingBot {
   private static final String BUY_CAT_STATE = "buy-cat";
   private static final String CAT_NEWS_STATE = "cat-news";
 
-  public InitStatePollingService(String token) {
+  public InitStatePollingHandler(String token) {
     super(token);
   }
 

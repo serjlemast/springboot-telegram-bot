@@ -9,7 +9,6 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public record MessageResponse(Long messageId, LocalDateTime dateTime) {
 
   public MessageResponse(Message message) {
-
     this(
         message.getChatId(),
         Optional.ofNullable(message.getDate())

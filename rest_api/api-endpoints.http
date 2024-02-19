@@ -3,3 +3,12 @@ GET http://localhost:8080/v1/users
 
 ###
 GET http://localhost:8080/v1/chats
+
+###
+POST http://localhost:8080/v1/messages
+Content-Type: application/json
+
+{
+  "catId": -1001600823930,
+  "message": "New post \n https://www.eurointegration.com.ua/news/2024/02/19/7179946/"
+}

@@ -19,5 +19,6 @@ public interface ObjectMapper {
   ChatEntity dtoToEntity(ChatDto dto);
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "created", ignore = true)
   UserEntity dtoToEntity(UserDto dto);
 }

@@ -1,3 +1,6 @@
+server:
+  port: ${APP_SERVICE_PORT:8080}
+
 spring:
   config:
     import: optional:file:.env[.properties]
@@ -12,3 +15,13 @@ telegram:
   bot:
     username: ${TELEGRAM.BOT.USERNAME:bot_name}
     token: ${TELEGRAM.BOT.TOKEN:app_token}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  swagger-ui:
+    path: /api/documentation

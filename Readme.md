@@ -139,3 +139,12 @@ Actuator endpoints:
 
 project: google-java-format,
 link: https://github.com/google/google-java-format/blob/master/README.md#intellij-jre-config
+
+### Hosting Springboot app
+
+Deploy for Free - https://render.com/ <br>
+You can deploy instances of some Render services <br>
+link: https://docs.render.com/free
+
+Deploying a Spring Boot Application with Docker Image on Render <br>
+tutorial: https://medium.com/@nithinsudarsan/deploying-a-spring-boot-application-with-docker-image-on-render-com-9a87f5ce5f72

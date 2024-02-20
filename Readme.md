@@ -137,10 +137,17 @@ Actuator endpoints:
 
 ### Java code style
 
+Java code style refers to the conventions and guidelines that developers follow when writing Java code to ensure
+consistency and readability.
+
 project: google-java-format,
 link: https://github.com/google/google-java-format/blob/master/README.md#intellij-jre-config
 
 ### Hosting Springboot app
+
+Render is a cloud platform that offers a variety of services for developers, including hosting for web applications,
+databases, and static sites. Render aims to simplify the process of deploying and scaling applications by providing a
+user-friendly interface and seamless integration with popular development tools.
 
 Deploy for Free - https://render.com/ <br>
 You can deploy instances of some Render services <br>
@@ -148,3 +155,12 @@ link: https://docs.render.com/free
 
 Deploying a Spring Boot Application with Docker Image on Render <br>
 tutorial: https://medium.com/@nithinsudarsan/deploying-a-spring-boot-application-with-docker-image-on-render-com-9a87f5ce5f72
+
+### UptimeRobot: Monitor anything
+
+UptimeRobot is a website monitoring service that checks the status of your websites, servers, and other online services
+at regular intervals. It notifies you if any of your monitored services go down, helping you to quickly address any
+issues and minimize downtime.
+
+link: https://uptimerobot.com/ <br>
+tutorial: https://www.youtube.com/watch?v=wP-tFyZhoio <br>

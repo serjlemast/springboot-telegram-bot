@@ -1,4 +1,12 @@
-### Project setup
+### Webservice setup
+
+* Java 21
+* Springboot 3.2.2
+* Mongo atlas database
+* render.com webservice
+* UptimeRobot webservice monitoring
+
+### Springboot project setup
 
 create .env file with properties:
 

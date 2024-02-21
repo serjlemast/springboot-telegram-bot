@@ -25,3 +25,7 @@ management:
 springdoc:
   swagger-ui:
     path: /api/documentation
+
+jwt:
+  app:
+    secret: ${JWT_SECRET_KEY:jwt_key}

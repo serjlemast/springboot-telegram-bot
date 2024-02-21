@@ -1,8 +1,11 @@
 package com.malexj.configuration;
 
+import com.malexj.filter.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -23,5 +26,13 @@ public class ApplicationConfiguration {
     var botsApi = new TelegramBotsApi(DefaultBotSession.class);
     var botSession = botsApi.registerBot(bot);
     log.info("Starting TelegramBotsApi - {}", botSession.isRunning());
+  }
+
+  @Bean
+  public FilterRegistrationBean<JwtTokenFilter> jwtFilter(JwtTokenFilter jwtTokenFilter) {
+    FilterRegistrationBean<JwtTokenFilter> registrationBean = new FilterRegistrationBean<>();
+    registrationBean.setFilter(jwtTokenFilter);
+    registrationBean.addUrlPatterns("/v1/*");
+    return registrationBean;
   }
 }

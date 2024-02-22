@@ -11,9 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @Slf4j
 @Configuration
+@EnableMongoAuditing
 @RequiredArgsConstructor
 public class MongoConfiguration extends AbstractMongoClientConfiguration {
 

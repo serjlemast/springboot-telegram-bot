@@ -1,5 +1,12 @@
 ### Webservice setup
 
+#### Projects:
+
+* https://github.com/MAlexJ/springboot-telegram-bot
+* https://github.com/MAlexJ/springboot-rss
+
+##### Description:
+
 * Java 21
 * Springboot 3.2.2
 * Mongo atlas database

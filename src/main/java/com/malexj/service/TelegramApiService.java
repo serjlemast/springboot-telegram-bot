@@ -4,23 +4,32 @@ import com.malexj.model.request.MessageRequest;
 import com.malexj.model.response.ChatResponse;
 import com.malexj.model.response.MessageResponse;
 import com.malexj.model.response.UserResponse;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TelegramApiService {
+
+  private static final String SHORT_MASSAGE_FORMAT = "%s ...";
 
   private final DefaultAbsSender sender;
   private final StorageService storageService;
 
   @SneakyThrows
   public MessageResponse sendMessage(MessageRequest request) {
+    log.info(
+        "Message to be sent, chatId - {}, short message - {}",
+        request.catId(),
+        shortMessage(request));
     Message message =
         sender.execute(
             SendMessage.builder()
@@ -30,6 +39,13 @@ public class TelegramApiService {
                 .text(request.message())
                 .build());
     return new MessageResponse(message);
+  }
+
+  private String shortMessage(MessageRequest request) {
+    return Optional.ofNullable(request.message())
+        .filter(message -> message.length() > 50)
+        .map(message -> String.format(SHORT_MASSAGE_FORMAT, message.substring(0, 100)))
+        .orElse("");
   }
 
   public UserResponse findAllUsers() {

@@ -43,8 +43,8 @@ public class TelegramApiService {
 
   private String shortMessage(MessageRequest request) {
     return Optional.ofNullable(request.message())
-        .filter(message -> message.length() > 50)
-        .map(message -> String.format(SHORT_MASSAGE_FORMAT, message.substring(0, 100)))
+        .filter(message -> message.length() > 60)
+        .map(message -> String.format(SHORT_MASSAGE_FORMAT, message.substring(0, 50)))
         .orElse("");
   }
 

@@ -34,7 +34,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     return Optional.ofNullable(req.getHeader("Authorization"))
         .filter(header -> header.startsWith("Bearer "))
         .map(header -> header.substring(7))
-        .orElseThrow(() -> new ServletException("No JWT token found in the request headers"));
+        .orElseThrow(() -> new ServletException("JWT token not found in request headers"));
   }
 
   private void verifyJwtToken(String jwtToken) throws ServletException {

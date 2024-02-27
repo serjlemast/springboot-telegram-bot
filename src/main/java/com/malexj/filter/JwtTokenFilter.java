@@ -29,7 +29,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     chain.doFilter(request, response);
   }
 
-  private static String getJwtTokenFromAuthorizationHeader(HttpServletRequest req)
+  private String getJwtTokenFromAuthorizationHeader(HttpServletRequest req)
       throws ServletException {
     return Optional.ofNullable(req.getHeader("Authorization"))
         .filter(header -> header.startsWith("Bearer "))

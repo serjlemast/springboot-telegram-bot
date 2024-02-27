@@ -25,7 +25,7 @@ public abstract class InitStatePollingHandler extends TelegramLongPollingBot {
   private static final String BUY_CAT_STATE = "buy-cat";
   private static final String CAT_NEWS_STATE = "cat-news";
 
-  public InitStatePollingHandler(String token) {
+  protected InitStatePollingHandler(String token) {
     super(token);
   }
 

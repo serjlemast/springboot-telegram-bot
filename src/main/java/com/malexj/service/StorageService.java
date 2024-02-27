@@ -4,7 +4,6 @@ import com.malexj.mapper.ObjectMapper;
 import com.malexj.model.ChatDto;
 import com.malexj.model.ChatType;
 import com.malexj.model.UserDto;
-import com.malexj.model.entity.UserEntity;
 import com.malexj.repository.ChatRepository;
 import com.malexj.repository.UserRepository;
 import java.util.*;

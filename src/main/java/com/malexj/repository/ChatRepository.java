@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatRepository extends MongoRepository<ChatEntity, String> {
-    boolean existsByChatId(Long chatId);
+  boolean existsByChatId(Long chatId);
 }

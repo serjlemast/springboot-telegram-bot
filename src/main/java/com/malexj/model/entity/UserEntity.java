@@ -1,7 +1,7 @@
 package com.malexj.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.TypeAlias;
@@ -28,7 +28,7 @@ public class UserEntity implements Persistable<String> {
   private String lastName;
   private String username;
 
-  @CreatedDate private ZonedDateTime created;
+  @CreatedDate private LocalDateTime created;
 
   /**
    * How Spring Data Jdbc determines that the object is new: <br>

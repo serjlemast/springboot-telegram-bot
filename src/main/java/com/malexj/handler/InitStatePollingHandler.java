@@ -43,6 +43,7 @@ public abstract class InitStatePollingHandler extends TelegramLongPollingBot {
                     sendMessage(
                         chatId,
                         buildText("Вот тут красивые коты!!!", "https://skrynya.ua/product/984134"));
+                default -> throw new UnsupportedOperationException();
               }
             });
   }

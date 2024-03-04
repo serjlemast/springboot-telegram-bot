@@ -1,6 +1,3 @@
-# Spring project is prepared to run on https://render.com/ webservice
-#
-# Build stage
 FROM gradle:jdk21-jammy AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src

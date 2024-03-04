@@ -4,6 +4,8 @@
 
 * https://github.com/MAlexJ/springboot-telegram-bot
 * https://github.com/MAlexJ/springboot-rss
+* https://github.com/MAlexJ/springboot-publisher
+* https://github.com/MAlexJ/app-prometheus
 
 ##### Description:
 

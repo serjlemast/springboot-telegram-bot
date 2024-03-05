@@ -36,8 +36,24 @@ public abstract class InitStatePollingHandler extends TelegramLongPollingBot {
             data -> {
               var chatId = findChatId(update);
               switch (data) {
-                case DONT_NEED_CAT_STATE ->
-                    sendMessage(chatId, "Не нужен тебе кот, если сюда нажал!!!");
+                case DONT_NEED_CAT_STATE -> {
+                  // for testing
+                  CallbackQuery callbackQuery = update.getCallbackQuery();
+                  var callbackId = callbackQuery.getId();
+                  var chatInstance = callbackQuery.getChatInstance();
+                  sendMessage(
+                      chatId,
+                      "Не нужен тебе кот, если сюда нажал!!!\n"
+                          // for testing
+                          + "\nchatId="
+                          + chatId
+                          + "\nupdateId="
+                          + update.getUpdateId()
+                          + "\ncallbackId="
+                          + callbackId
+                          + "\nchatInstance="
+                          + chatInstance);
+                }
                 case BUY_CAT_STATE -> sendMessage(chatId, "Бля нажми кнопку 'Где купить кота' !");
                 case CAT_NEWS_STATE ->
                     sendMessage(
@@ -102,7 +118,7 @@ public abstract class InitStatePollingHandler extends TelegramLongPollingBot {
         SendMessage.builder() //
             .chatId(chatId)
             .parseMode(ParseMode.MARKDOWN)
-            .text("Чудо бот, который поможет вам купить кота!")
+            .text("Чудо бот, который поможет вам купить кота!" + "\n chatId = " + chatId)
             .replyMarkup(replyKeyboard)
             .build();
     return execute(message);
